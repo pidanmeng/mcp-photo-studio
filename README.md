@@ -4,9 +4,15 @@
 
 ## 功能
 
-当前实现了一个简单的数学工具：
+影楼后期大师实现了多个实用的图像处理工具：
 
-- `add`: 用于执行两个数字相加的操作
+- `change-clothes`: 换装工具，让模特穿上指定的服装
+- `check-image-generation-status`: 查询生图任务状态，并以自然语言形式输出结果
+- `old-photo-restoration`: 老照片修复工具，可以修复和上色老照片，去除划痕和瑕疵
+- `pet-outfit-change`: 宠物换装工具，给宠物穿上指定的服饰
+- `portrait-retouching`: 人像精修工具，对人物照片进行美白、提升分辨率和减少 AI 感
+- `product-image-retouching`: 产品图精修工具，对商品图片进行专业精修处理
+- `texture-enhancement`: 质感增强工具，对图片进行质感增强处理
 
 ## 部署 MCP
 
@@ -17,7 +23,8 @@
       "args": ["-y","@pidanmoe/mcp-photo-studio"],
       "command": "npx",
       "env": {
-        // 环境变量
+        "LIB_SECRET_KEY": "",
+        "LIB_ACCESS_KEY": ""
       }
     }
   }
@@ -30,14 +37,73 @@
 
 ### 工具介绍
 
-#### add
+#### check-image-generation-status
 
-用于执行两个数字相加的操作
+查询生图任务状态，并以自然语言形式输出结果
 
 - 必填参数:
-  - `a`: 第一个操作数
-  - `b`: 第二个操作数
-- 返回: a + b 的值
+  - `generateUuid`: 生图任务 UUID，发起生图任务时返回的字段
+- 返回: 任务状态的自然语言描述
+
+#### change-clothes
+
+换装工具，让模特穿上指定的服装
+
+- 必填参数:
+  - `modelImageUrl`: 模特图片的 URL 地址
+  - `clothImageUrl`: 衣服图片的 URL 地址
+- 可选参数:
+  - `prompt`: 提示词，用于指导换装过程(默认:"让图 1 的模特穿上图 2 的套装服饰，保持动作不变，生成全身照")
+- 返回: 生图任务结果
+
+#### old-photo-restoration
+
+老照片修复工具，可以修复和上色老照片，去除划痕和瑕疵
+
+- 必填参数:
+  - `imageUrl`: 老照片的 URL 地址
+- 可选参数:
+  - `prompt`: 英文提示词，指导修复过程(默认为: "Restore and colorize this image. Remove any scratches or imperfections.")
+- 返回: 生图任务结果
+
+#### pet-outfit-change
+
+宠物换装工具，给宠物穿上指定的服饰
+
+- 必填参数:
+  - `clothingImageUrl`: 衣服图片的 URL 地址
+  - `petImageUrl`: 宠物图片的 URL 地址
+- 可选参数:
+  - `prompt`: 提示词，用于指导换装过程(默认为:把图 1 的衣服和配饰穿到图 2 宠物身上)
+- 返回: 生图任务结果
+
+#### portrait-retouching
+
+人像精修工具，对人物照片进行美白、提升分辨率和减少 AI 感
+
+- 必填参数:
+  - `imageUrl`: 原图的 URL 地址
+- 可选参数:
+  - `whiteningStrength`: 美白强度(0~1)，皮肤原本就白不生效，建议默认 0.8
+  - `maxResolution`: 最长边分辨率(2536~8000)
+  - `aiReductionStrength`: 去 AI 感强度，建议 0.05~0.15，建议默认 0.1
+- 返回: 生图任务结果
+
+#### product-image-retouching
+
+产品图精修工具，对商品图片进行专业精修处理
+
+- 必填参数:
+  - `productImageUrl`: 商品图的 URL 地址
+- 返回: 生图任务结果
+
+#### texture-enhancement
+
+质感增强工具，对图片进行质感增强处理
+
+- 必填参数:
+  - `imageUrl`: 原图的 URL 地址
+- 返回: 生图任务结果
 
 ## 安装依赖
 
@@ -65,9 +131,18 @@ bun run build
 
 ## 项目结构
 
-- [index.ts](file:///Volumes/SSD/_work/resend-mcp/index.ts): 主入口文件，初始化并启动 FastMCP 服务器
-- [tools/add.ts](file:///Volumes/SSD/_work/resend-mcp/tools/add.ts): 实现了 `add` 工具，支持两个数字相加操作
-- [utils/logger.ts](file:///Volumes/SSD/_work/resend-mcp/utils/logger.ts): 日志工具模块
+- [index.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/index.ts): 主入口文件，初始化并启动 FastMCP 服务器
+- [tools/](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/): 工具目录，包含各种图像处理工具
+  - [change-clothes.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/change-clothes.ts): 实现了换装工具
+  - [check-image-generation-status.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/check-image-generation-status.ts): 实现了生图任务状态查询工具
+  - [old-photo-restoration.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/old-photo-restoration.ts): 实现了老照片修复工具
+  - [pet-outfit-change.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/pet-outfit-change.ts): 实现了宠物换装工具
+  - [portrait-retouching.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/portrait-retouching.ts): 实现了人像精修工具
+  - [product-image-retouching.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/product-image-retouching.ts): 实现了产品图精修工具
+  - [texture-enhancement.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/tools/texture-enhancement.ts): 实现了质感增强工具
+- [utils/](file:///Volumes/SSD/_work/mcp-photo-studio/src/utils/): 工具类目录
+  - [logger.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/utils/logger.ts): 日志工具模块
+  - [comfyui.ts](file:///Volumes/SSD/_work/mcp-photo-studio/src/utils/comfyui.ts): ComfyUI 接口调用模块
 
 ## 技术栈
 
