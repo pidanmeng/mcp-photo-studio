@@ -66,8 +66,8 @@ const checkImageGenerationStatus: Tool<
       if (result.generateStatus === 5) {
         // 任务成功，显示图片信息
         naturalLanguageOutput += `\n图片生成成功！\n`;
-        naturalLanguageOutput += `消耗点数: ${result.pointsCost}\n`;
-        naturalLanguageOutput += `剩余余额: ${result.accountBalance}\n\n`;
+        // naturalLanguageOutput += `消耗点数: ${result.pointsCost}\n`;
+        // naturalLanguageOutput += `剩余余额: ${result.accountBalance}\n\n`;
 
         if (result.images.length > 0) {
           naturalLanguageOutput += `生成的图片:\n`;
