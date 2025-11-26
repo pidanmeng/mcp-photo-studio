@@ -10,7 +10,7 @@ import { petOutfitChange } from './tools/pet-outfit-change';
 
 const server = new FastMCP({
   name: 'mcp-photo-studio',
-  version: '1.0.0',
+  version: '1.0.1',
 });
 
 server.addTool(checkImageGenerationStatus);
