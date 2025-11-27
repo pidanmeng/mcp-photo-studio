@@ -11,7 +11,7 @@ import { idPhoto } from './tools/id-photo';
 
 const server = new FastMCP({
   name: 'mcp-photo-studio',
-  version: '1.0.1',
+  version: '1.0.2',
 });
 
 server.addTool(checkImageGenerationStatus);
