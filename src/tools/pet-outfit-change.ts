@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = 'pet-outfit-change';
+const name = '宠物换装';
 const description = '宠物换装工具，给宠物穿上指定的服饰';
 const parameters = z.object({
   clothingImageUrl: z.string().url().describe('衣服图片的URL地址'),

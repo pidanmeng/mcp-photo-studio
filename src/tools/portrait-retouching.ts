@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = 'portrait-retouching';
+const name = '人像精修';
 const description = '人像精修工具，对人物照片进行美白、提升分辨率和减少AI感';
 const parameters = z.object({
   imageUrl: z.string().url().describe('原图的URL地址'),

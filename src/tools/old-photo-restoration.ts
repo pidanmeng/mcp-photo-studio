@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = 'old-photo-restoration';
+const name = '老照片修复';
 const description = '老照片修复工具，可以修复和上色老照片，去除划痕和瑕疵';
 const parameters = z.object({
   imageUrl: z.string().url().describe('老照片的URL地址'),

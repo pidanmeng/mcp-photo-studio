@@ -3,38 +3,36 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = '产品图精修';
-const description = '产品图精修工具，对商品图片进行专业精修处理';
+const name = '证件照生成';
+const description = '证件照生成工具，根据照片生成标准证件照';
 const parameters = z.object({
-  productImageUrl: z.string().url().describe('商品图的URL地址'),
+  imageUrl: z.string().url().describe('原图的URL地址'),
 });
 
-type ProductImageRetouchingParams = z.infer<typeof parameters>;
+type IdPhotoParams = z.infer<typeof parameters>;
 
-const productImageRetouching: Tool<any, z.ZodType<ProductImageRetouchingParams>> = {
+const idPhoto: Tool<any, z.ZodType<IdPhotoParams>> = {
   name,
   description,
   parameters,
   execute: async (args, context) => {
-    const {
-      productImageUrl
-    } = args;
+    const { imageUrl } = args;
     const { log } = context;
     const logger = useLogger(log);
 
-    logger.info('Starting product image retouching', {
-      productImageUrl,
+    logger.info('Starting ID photo generation', {
+      imageUrl,
     });
 
     // 定义工作流参数
     const generateParams: GenerateParams = {
-      '20': {
+      '23': {
         class_type: 'LoadImage',
         inputs: {
-          image: productImageUrl,
+          image: imageUrl,
         },
       },
-      workflowUuid: '3ce63f1f851942e59b32f17866c4c1c7',
+      workflowUuid: '384248225f3a4276877a54e2a2efa150',
     };
 
     try {
@@ -44,17 +42,17 @@ const productImageRetouching: Tool<any, z.ZodType<ProductImageRetouchingParams>>
         generateParams,
       });
 
-      logger.info('Product image retouching workflow initiated', {
+      logger.info('ID photo workflow initiated', {
         result: result,
       });
       return result;
     } catch (error) {
-      logger.error('Failed to execute product image retouching', {
+      logger.error('Failed to execute ID photo generation', {
         error: (error as Error).message,
       });
-      return 'Failed to execute product image retouching';
+      return 'Failed to execute ID photo generation';
     }
   },
 };
 
-export { productImageRetouching };
+export { idPhoto };

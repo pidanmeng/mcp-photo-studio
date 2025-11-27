@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = 'change-clothes';
+const name = '换装';
 const description = '换装工具，让模特穿上指定的服装';
 const parameters = z.object({
   modelImageUrl: z.string().url().describe('模特图片的URL地址'),

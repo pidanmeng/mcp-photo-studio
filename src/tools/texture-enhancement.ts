@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { invokeComfyUIWorkflow, GenerateParams } from '../utils/comfyui';
 
-const name = 'texture-enhancement';
+const name = '质感增强';
 const description = '质感增强工具，对图片进行质感增强处理';
 const parameters = z.object({
   imageUrl: z.string().url().describe('原图的URL地址'),

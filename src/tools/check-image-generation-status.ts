@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useLogger } from '../utils/logger';
 import { queryComfyUIImageStatus } from '../utils/comfyui';
 
-const name = 'check-image-generation-status';
+const name = '查询生图任务状态';
 const description = '查询生图任务状态，并以自然语言形式输出结果';
 const parameters = z.object({
   generateUuid: z.string().describe('生图任务UUID，发起生图任务时返回的字段'),
