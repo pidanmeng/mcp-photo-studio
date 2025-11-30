@@ -1,6 +1,6 @@
 {
   "name": "@pidanmoe/mcp-photo-studio",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "module": "dist/index.js",
   "preferGlobal": true,
   "bin": {
